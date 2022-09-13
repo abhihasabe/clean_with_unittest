@@ -7,17 +7,18 @@ class SplashCubit extends Cubit<SplashState> {
 
   SplashCubit({this.splashUseCase}) : super(SplashInitial());
 
-  Future<void> checkAccount() async {
+  Future<void> checkAccount(String key) async {
     try {
-      splashUseCase?.invoke().then((account) {
-        if (account.toString().isNotEmpty) {
-          emit(SplashToHome());
+      splashUseCase?.invoke(key).then((user) async {
+        var userData = await user.right;
+        if (userData != null) {
+          emit(SplashToHome(message: userData));
         } else {
-          emit(SplashToWelcome());
+          emit(SplashToLogin(message: userData));
         }
       });
     } catch (_) {
-      emit(SplashToWelcome());
+      emit(const SplashToLogin());
     }
   }
 }

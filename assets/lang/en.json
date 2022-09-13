@@ -1,0 +1,11 @@
+{
+  "splash": "Splash",
+  "lang": "Language",
+  "theme": "Theme",
+  "email": "email",
+  "password": "password",
+  "peveid": "peveid",
+  "peeid": "peeid",
+  "pepass": "pepass",
+  "signin": "signin"
+}

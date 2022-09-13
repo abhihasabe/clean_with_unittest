@@ -7,17 +7,17 @@ import 'package:velocity_x/velocity_x.dart';
 
 class Routes {
   static VxNavigator routerDelegate = VxNavigator(routes: {
-    AppRouteConstants.splashScreen: (uri, params) {
-      return VxRoutePage(pageName: "splash", child: const Splash());
+    AppRouteConstants.initialScreen: (uri, params) {
+      return VxRoutePage(pageName: "/splash", child: const Splash());
     },
     AppRouteConstants.loginScreen: (uri, params) {
-      return VxRoutePage(pageName: "login", child: const Login());
+      return VxRoutePage(pageName: "/login", child: const Login());
     },
     AppRouteConstants.registerScreen: (uri, params) {
-      return VxRoutePage(pageName: "register", child: const Registration());
+      return VxRoutePage(pageName: "/register", child: const Registration());
     },
     AppRouteConstants.homeScreen: (uri, params) {
-      return VxRoutePage(pageName: "home", child: const Home());
+      return VxRoutePage(pageName: "/home", child: const Home());
     },
   });
 }

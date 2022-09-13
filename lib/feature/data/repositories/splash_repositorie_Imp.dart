@@ -8,18 +8,18 @@ import 'package:either_dart/src/either.dart';
 
 class SplashRepositoryImpl implements SplashRepository {
   final RemoteDataSource? remoteDataSource;
-  final LocalDataSource? localDataStorage;
-  final CacheDataSource? cacheDataStorage;
+  final LocalDataSource? localDataSource;
+  final CacheDataSource? cacheDataSource;
 
   SplashRepositoryImpl(
-      {this.remoteDataSource, this.localDataStorage, this.cacheDataStorage});
+      {this.remoteDataSource, this.localDataSource, this.cacheDataSource});
 
   @override
-  Future<Either<Failure, dynamic>> getAuthData() async {
+  Future<Either<Failure, dynamic>> getAuthData(key) async {
     // TODO: implement getAuthData
     try {
-      final dynamic apiResult = cacheDataStorage?.getCacheAuthData();
-      return Right(apiResult);
+      final dynamic authData = cacheDataSource?.getStringData(key);
+      return Right(authData);
     } on ServerException {
       return Left(ServerFailure());
     }

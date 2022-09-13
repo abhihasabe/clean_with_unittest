@@ -3,40 +3,44 @@ import 'package:meta/meta.dart' show required;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-abstract class HttpClient {
+abstract class HttpClientManager {
   Future<dynamic> request({
-    @required String url,
+    @required Uri url,
     @required String method,
     Map body,
     Map headers,
   });
 }
 
-class HttpClientManager implements HttpClient {
-  final http.Client client;
+class HttpClientManagerImpl implements HttpClientManager {
+  final http.Client initClient;
 
-  HttpClientManager({required this.client});
+  HttpClientManagerImpl({required this.initClient});
 
-  Future<dynamic> request({@required String? url, @required String? method, Map? body, Map? headers}) async {
-    final defaultHeaders = headers?.cast<String, String>() ?? {}
-      ..addAll({'content-type': 'application/json', 'accept': 'application/json'});
+  Future<dynamic> request(
+      {@required Uri? url,
+      @required String? method,
+      Map? body,
+      Map? headers}) async {
+    final defaultHeaders = /*headers?.cast<String, String>() ?? {}
+      ..addAll(
+          */
+        {'content-type': 'application/json', 'accept': 'application/json'};
+    /*);*/
     final jsonBody = body != null ? jsonEncode(body) : null;
     var response = http.Response('', 500);
-    Uri url = Uri();
     Future<http.Response>? futureResponse;
     try {
       if (method == 'post') {
-        futureResponse = client?.post(url, headers: defaultHeaders, body: jsonBody);
-      }
-      else if (method == 'get') {
-        futureResponse = client?.get(url, headers: defaultHeaders);
-      }
-      else if (method == 'put') {
         futureResponse =
-            client?.put(url, headers: defaultHeaders, body: jsonBody);
-      }
-      else if (method == 'delete') {
-        futureResponse = client?.delete(url, headers: defaultHeaders);
+            initClient.post(url!, headers: defaultHeaders, body: jsonBody);
+      } else if (method == 'get') {
+        futureResponse = initClient.get(url!, headers: defaultHeaders);
+      } else if (method == 'put') {
+        futureResponse =
+            initClient.put(url!, headers: defaultHeaders, body: jsonBody);
+      } else if (method == 'delete') {
+        futureResponse = initClient.delete(url!, headers: defaultHeaders);
       }
       if (futureResponse != null) {
         response = await futureResponse.timeout(const Duration(seconds: 30));

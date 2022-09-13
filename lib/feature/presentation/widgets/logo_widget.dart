@@ -10,10 +10,12 @@ class LogoWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          'assets/icons/icon.png',
-          color: color,
-          width: 55,
+        Center(
+          child: Image.asset(
+            'assets/icons/icon.png',
+            color: color,
+            width: 55,
+          ),
         ),
         SizedBox(height: 19),
         Text(

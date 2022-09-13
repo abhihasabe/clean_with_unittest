@@ -1,16 +1,29 @@
 import 'package:clean_unittest/feature/data/sources/cache_source/cache_source.dart';
+import 'package:clean_unittest/core/constants/app_cache_constant.dart';
 import 'package:clean_unittest/core/manager/cache_manager.dart';
-import 'package:clean_unittest/core/error/failure.dart';
-import 'package:either_dart/either.dart';
 
 class CacheDataSourceImpl implements CacheDataSource {
-  Cache? cache;
+  CacheManager? cache;
 
   CacheDataSourceImpl({this.cache});
 
   @override
-  Future<Either<Failure, dynamic>> getCacheAuthData() async {
+  Future<dynamic> getStringData(String key) async {
     // TODO: implement getAuthData
-    return await cache?.fetch(key: "user");
+    final cacheResponse = await cache?.request(
+        cacheName: CacheConstants.cacheName, method: "getString", key: key);
+    return cacheResponse;
+  }
+
+  @override
+  Future saveStringData(String key, String? value) async {
+    // TODO: implement save
+
+    final httpResponse = await cache?.request(
+        cacheName: CacheConstants.cacheName,
+        method: "postString",
+        key: key,
+        value: value!);
+    return httpResponse;
   }
 }
