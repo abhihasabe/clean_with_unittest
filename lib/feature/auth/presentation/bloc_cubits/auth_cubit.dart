@@ -1,6 +1,7 @@
 import 'package:clean_unittest/core/validations/field_validation.dart';
 import 'package:clean_unittest/core/validations/number_validation_dart.dart';
 import 'package:clean_unittest/feature/auth/domain/entities/login_entity.dart';
+import 'package:clean_unittest/feature/auth/domain/entities/reg_entity.dart';
 import 'package:clean_unittest/feature/auth/presentation/bloc_cubits/auth_state.dart';
 import 'package:clean_unittest/feature/auth/domain/usecases/login_usecase.dart';
 import 'package:clean_unittest/feature/auth/domain/usecases/reg_usecase.dart';
@@ -60,40 +61,40 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> userLogin() async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final data = await loginUseCase.invoke(
-        LoginParams(email: state.email.value, password: state.password.value));
-    data.fold(
-      (l) {
-        if (l is ServerFailure) {
-          emit(state.copyWith(
-              status: FormzStatus.submissionFailure,
-              exceptionError: l.message));
-        }
-      },
-      (r) => emit(state.copyWith(
-          status: FormzStatus.submissionSuccess, outPut: r.token)),
-    );
+    final data = await loginUseCase
+        .invoke(LoginParams(
+            email: state.email.value, password: state.password.value))
+        .then((resp) => _eitherLoadedOrErrorState(resp));
   }
 
   Future<void> userReg() async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final data = regUseCase.invoke(RegisterParams(
-        fName: state.fName.value,
-        lName: state.lName.value,
-        number: state.number.value,
-        email: state.email.value,
-        password: state.password.value));
-    data.fold(
-      (l) {
-        if (l is ServerFailure) {
-          emit(state.copyWith(
-              status: FormzStatus.submissionFailure,
-              exceptionError: l.message));
-        }
-      },
-      (r) => emit(
-          state.copyWith(status: FormzStatus.submissionSuccess, outPut: r)),
-    );
+    regUseCase
+        .invoke(RegisterParams(
+            fName: state.fName.value,
+            lName: state.lName.value,
+            number: state.number.value,
+            email: state.email.value,
+            password: state.password.value))
+        .then((resp) => _eitherLoadedOrErrorState(resp));
+  }
+
+  Future<void> _eitherLoadedOrErrorState(Either<Failure, dynamic> resp) async {
+    resp.fold((failure) {
+      if (failure is ServerFailure) {
+        emit(state.copyWith(
+            status: FormzStatus.submissionFailure,
+            exceptionError: failure.message));
+      }
+    }, (success) {
+      if (success is LoginEntity) {
+        emit(state.copyWith(
+            status: FormzStatus.submissionSuccess, outPut: success.token));
+      } else if (success is RegEntity) {
+        emit(state.copyWith(
+            status: FormzStatus.submissionSuccess, outPut: success));
+      }
+    });
   }
 
   // auth_screen logout
