@@ -5,10 +5,11 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [];
 }
 
-class ServerFailure extends Failure {}
+class ServerFailure extends Failure {
+  String? message;
 
-class NotConnectedFailure extends Failure {}
+  ServerFailure({this.message = ""});
 
-class UnauthorizedFailure extends Failure {}
-
-class ItemNotFoundFailure extends Failure {}
+  @override
+  List<Object?> get props => [this.message];
+}

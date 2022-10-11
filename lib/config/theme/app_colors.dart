@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color primarySwatch = Colors.red;
 const Color primaryDarkSwatch = Colors.red;
 
-const Color primaryColor = Color(0xff2470c7);
+const Color primaryColor = Color(0xb23055a6);
 const Color primaryDarkColor = Colors.black;
 
 const Color onPrimaryColor = Colors.white;
@@ -63,7 +63,7 @@ const Color tabUnSelectedIndicatorDarkColor = Colors.black;
 const Color backgroundColor = Colors.white;
 const Color backgroundDarkColor = Color(0xFF393838);
 
-const Color scaffoldBackgroundColor = Color(0xffF1F5FB);
+const Color scaffoldBackgroundColor = Color(0xb23055a6);
 const Color scaffoldBackgroundDarkColor = Colors.black;
 
 const Color cardColor = Colors.white;
@@ -102,23 +102,23 @@ const Color cursorColor = primaryDarkColor;
 
 const Color cursorDarkColor = primaryColor;
 const Color labelColor = Colors.black;
-
 const Color labelDarkColor = Colors.white;
+
 const Color enableBorderColor = Colors.black12;
-
 const Color enableBorderDarkColor = Colors.white10;
+
 const Color focusedBorderColor = primaryColor;
-
 const Color focusedBorderDarkColor = primaryDarkColor;
+
 const Color highlightColor = Color(0xffFCE192);
-
 const Color highlightDarkColor = Color(0xff372901);
+
 const Color hoverColor = Color(0xff3A3A3B);
-
 const Color hoverColorDarkColor = Color(0xff3A3A3B);
-const Color focusColor = Color(0xffA8DAB5);
 
+const Color focusColor = Color(0xffA8DAB5);
 const Color focusColorDarkColor = Color(0xff0B2512);
+
 const Color iconColor = Colors.white;
 
 const Color iconDarkColor = Colors.black;

@@ -1,3 +1,4 @@
+import 'package:clean_unittest/feature/auth/data/models/error_model.dart';
 import 'package:clean_unittest/core/error/exceptions.dart';
 import 'package:meta/meta.dart' show required;
 import 'package:http/http.dart' as http;
@@ -22,11 +23,11 @@ class HttpClientManagerImpl implements HttpClientManager {
       @required String? method,
       Map? body,
       Map? headers}) async {
-    final defaultHeaders = /*headers?.cast<String, String>() ?? {}
-      ..addAll(
-          */
-        {'content-type': 'application/json', 'accept': 'application/json'};
-    /*);*/
+    final defaultHeaders = {
+      'content-type': 'application/json',
+      'accept': 'application/json'
+    };
+
     final jsonBody = body != null ? jsonEncode(body) : null;
     var response = http.Response('', 500);
     Future<http.Response>? futureResponse;
@@ -58,21 +59,29 @@ class HttpClientManagerImpl implements HttpClientManager {
       case 204:
         return null;
       case 400:
-        throw BadRequestException(response.body.toString());
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
       case 401:
-        throw UnauthorizedException(response.body.toString());
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
       case 403:
-        throw ForbiddenException(response.body.toString());
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
       case 404:
-        throw NotFoundException(response.body.toString());
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
       case 409:
-        throw ConflictException(response.body.toString());
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
       case 500:
-        throw InternalServerErrorException(response.body.toString());
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
       case 503:
-        throw ServiceUnavailableException(response.body.toString());
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
       default:
-        throw ServerException();
+        throw ServerException(
+            ErrorModel.fromJson(jsonDecode(response.body)).message);
     }
   }
 }

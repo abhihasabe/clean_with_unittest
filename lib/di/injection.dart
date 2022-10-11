@@ -1,101 +1,134 @@
-import 'package:clean_unittest/config/theme/cubit/themes/theme_cubit.dart';
-import 'package:clean_unittest/core/manager/cache_manager.dart';
+import 'package:clean_unittest/feature/auth/domain/usecases/reg_usecase.dart';
+import 'package:clean_unittest/feature/auth/presentation/bloc_cubits/auth_cubit.dart';
+import 'package:clean_unittest/feature/splash/data/data_sources/splash_data_source_impl.dart';
+import 'package:clean_unittest/feature/language/data/data_sources/lang_data_source_impl.dart';
+import 'package:clean_unittest/feature/splash/data/repositories/splash_repositorie_Imp.dart';
+import 'package:clean_unittest/feature/language/data/repositories/lang_repository_impl.dart';
+import 'package:clean_unittest/feature/theme/data/data_sources/theme_data_source_impl.dart';
+import 'package:clean_unittest/feature/auth/data/data_sources/auth_data_source_impl.dart';
+import 'package:clean_unittest/feature/splash/domain/repositories/splash_repositorie.dart';
+import 'package:clean_unittest/feature/theme/data/repositories/theme_repository_impl.dart';
+import 'package:clean_unittest/feature/auth/data/repositories/auth_repository_impl.dart';
+import 'package:clean_unittest/feature/splash/presentation/bloc_cubits/splash_cubit.dart';
+import 'package:clean_unittest/feature/language/domain/repositories/lang_repository.dart';
+import 'package:clean_unittest/feature/language/presentation/bloc_cubits/lang_cubit.dart';
+import 'package:clean_unittest/feature/language/data/data_sources/lang_data_source.dart';
+import 'package:clean_unittest/feature/splash/data/data_sources/splash_data_source.dart';
+import 'package:clean_unittest/feature/app/data/repositories/theme_repository_impl.dart';
+import 'package:clean_unittest/feature/language/domain/usecases/show_lang_usecase.dart';
+import 'package:clean_unittest/feature/app/data/data_sources/app_data_source_impl.dart';
+import 'package:clean_unittest/feature/theme/presentation/bloc_cubits/theme_cubit.dart';
+import 'package:clean_unittest/feature/auth/domain/repositories/auth_repository.dart';
+import 'package:clean_unittest/feature/theme/data/data_sources/theme_data_source.dart';
+import 'package:clean_unittest/feature/language/domain/usecases/add_lang_usecase.dart';
+import 'package:clean_unittest/feature/auth/data/data_sources/auth_data_source.dart';
+import 'package:clean_unittest/feature/theme/domain/usecases/show_theme_usecase.dart';
+import 'package:clean_unittest/feature/theme/domain/repositories/app_repository.dart';
+import 'package:clean_unittest/feature/theme/domain/usecases/add_theme_usecase.dart';
+import 'package:clean_unittest/feature/app/domain/repositories/app_repository.dart';
+import 'package:clean_unittest/feature/app/presentation/bloc_cubits/app_cubit.dart';
+import 'package:clean_unittest/feature/splash/domain/usecases/splash_usecase.dart';
+import 'package:clean_unittest/feature/app/data/data_sources/app_data_source.dart';
+import 'package:clean_unittest/feature/auth/domain/usecases/login_usecase.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:clean_unittest/feature/app/domain/usecases/app_usecase.dart';
+import 'package:clean_unittest/core/manager/network_info_manager.dart';
 import 'package:clean_unittest/core/manager/http_client_manager.dart';
 import 'package:clean_unittest/core/manager/local_db_manager.dart';
-import 'package:clean_unittest/core/manager/network_info_manager.dart';
-import 'package:clean_unittest/feature/data/repositories/login_repository_impl.dart';
-import 'package:clean_unittest/feature/data/repositories/theme_repository_impl.dart';
-import 'package:clean_unittest/feature/domain/repositories/login_repository.dart';
-import 'package:clean_unittest/feature/domain/repositories/theme_repository.dart';
-import 'package:clean_unittest/feature/domain/usecases/login_usecase.dart';
-import 'package:clean_unittest/feature/domain/usecases/theme_usecase.dart';
-import 'package:clean_unittest/feature/presentation/bloc_cubits/login_cubit/login_cubit.dart';
-import 'package:clean_unittest/feature/presentation/bloc_cubits/splash_cubit/splash_cubit.dart';
-import 'package:clean_unittest/feature/data/sources/remote_source/remote_source_impl.dart';
-import 'package:clean_unittest/feature/data/sources/local_source/local_source_impl.dart';
-import 'package:clean_unittest/feature/data/sources/cache_source/cache_source_impl.dart';
-import 'package:clean_unittest/feature/data/sources/remote_source/remote_source.dart';
-import 'package:clean_unittest/feature/data/repositories/splash_repositorie_Imp.dart';
-import 'package:clean_unittest/feature/data/sources/cache_source/cache_source.dart';
-import 'package:clean_unittest/feature/data/sources/local_source/local_source.dart';
-import 'package:clean_unittest/feature/domain/repositories/splash_repositorie.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:clean_unittest/feature/domain/usecases/splash_usecase.dart';
+import 'package:clean_unittest/core/manager/cache_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-final getIt = GetIt.instance;
+final locator = GetIt.instance;
 
 Future<void> init() async {
   await initGlobals();
+  await initManagers();
   await initCubits();
   await initUseCases();
   await initRepositories();
   await initDataSources();
-  await initDataManagers();
 }
 
 Future<void> initGlobals() async {
-  getIt.registerLazySingleton<InternetConnectionChecker>(
+  locator.registerLazySingleton<InternetConnectionChecker>(
       () => InternetConnectionChecker());
-  getIt.registerLazySingleton<Future<SharedPreferences>>(
+  locator.registerLazySingleton<Future<SharedPreferences>>(
       () => SharedPreferences.getInstance());
-  getIt.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => http.Client());
 }
 
 Future<void> initCubits() async {
-  getIt.registerFactory(() => ThemeCubit(themeUseCase: getIt()));
-  getIt.registerFactory(() => SplashCubit(splashUseCase: getIt()));
-  getIt.registerFactory(
-      () => LoginCubit(loginUseCase: getIt(), cacheDataSource: getIt()));
+  locator.registerFactory(() => AppCubit(addAppUseCase: locator()));
+  locator.registerFactory(() => ThemeCubit(addAppUseCase: locator()));
+  locator.registerFactory(() => LangCubit(locale: locator()));
+  locator.registerFactory(() => SplashCubit(splashUseCase: locator()));
+  locator.registerFactory(
+      () => AuthCubit(loginUseCase: locator(), regUseCase: locator()));
 }
 
 Future<void> initUseCases() async {
-  getIt.registerLazySingleton(() => ThemeUseCase(themeRepository: getIt()));
-  getIt.registerLazySingleton(() => SplashUseCase(splashRepository: getIt()));
-  getIt.registerLazySingleton(() => LoginUseCase(loginRepository: getIt()));
+  locator.registerLazySingleton(() => AppUseCase(themeRepository: locator()));
+  locator
+      .registerLazySingleton(() => AddThemeUseCase(themeRepository: locator()));
+  locator
+      .registerLazySingleton(() => ShowThemeUseCase(appRepository: locator()));
+  locator
+      .registerLazySingleton(() => AddLangUseCase(langRepository: locator()));
+  locator
+      .registerLazySingleton(() => ShowLangUseCase(langRepository: locator()));
+  locator
+      .registerLazySingleton(() => SplashUseCase(splashRepository: locator()));
+  locator.registerLazySingleton(() => LoginUseCase(loginRepository: locator()));
+  locator.registerLazySingleton(() => RegUseCase(authRepository: locator()));
 }
 
 Future<void> initRepositories() async {
-  getIt.registerLazySingleton<ThemeRepository>(() => ThemeRepositoryImpl(
-      remoteDataSource: getIt(),
-      localDataSource: getIt(),
-      cacheDataSource: getIt()));
+  locator.registerLazySingleton<AppRepository>(
+      () => AppRepositoryImpl(appDataSource: locator()));
 
-  getIt.registerLazySingleton<SplashRepository>(() => SplashRepositoryImpl(
-      remoteDataSource: getIt(),
-      localDataSource: getIt(),
-      cacheDataSource: getIt()));
+  locator.registerLazySingleton<ThemeRepository>(
+      () => ThemeRepositoryImpl(themeDataSource: locator()));
 
-  getIt.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
-      remoteDataSource: getIt(),
-      localDataSource: getIt(),
-      cacheDataSource: getIt()));
+  locator.registerLazySingleton<LangRepository>(
+      () => LangRepositoryImpl(langDataSource: locator()));
+
+  locator.registerLazySingleton<SplashRepository>(
+      () => SplashRepositoryImpl(splashDataSource: locator()));
+
+  locator.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(authDataSource: locator()));
 }
 
 Future<void> initDataSources() async {
-  getIt.registerLazySingleton<RemoteDataSource>(
-      () => RemoteDataSourceImpl(httpClientManager: getIt()));
+  locator.registerLazySingleton<AppDataSource>(
+      () => AppDataSourceImpl(localDBManager: locator()));
 
-  getIt.registerLazySingleton<LocalDataSource>(
-      () => LocalDataSourceImpl(localDBManager: getIt()));
+  locator.registerLazySingleton<ThemeDataSource>(
+      () => ThemeDataSourceImpl(localDBManager: locator()));
 
-  getIt.registerLazySingleton<CacheDataSource>(
-      () => CacheDataSourceImpl(cache: getIt()));
+  locator.registerLazySingleton<LangDataSource>(
+      () => LangDataSourceImpl(localDBManager: locator()));
+
+  locator.registerLazySingleton<SplashDataSource>(
+      () => SplashDataSourceImpl(cache: locator()));
+
+  locator.registerLazySingleton<AuthDataSource>(
+      () => AuthDataSourceImpl(httpClientManager: locator()));
 }
 
-Future<void> initDataManagers() async {
-  var sharedPrefs = await getIt.get<Future<SharedPreferences>>();
+Future<void> initManagers() async {
+  var sharedPrefs = await locator.get<Future<SharedPreferences>>();
 
-  getIt.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoManager(connectionChecker: getIt()));
+  locator.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoManager(connectionChecker: locator()));
 
-  getIt.registerLazySingleton<HttpClientManager>(
-      () => HttpClientManagerImpl(initClient: getIt()));
+  locator.registerLazySingleton<HttpClientManager>(
+      () => HttpClientManagerImpl(initClient: locator()));
 
-  getIt.registerLazySingleton<LocalDBManager>(() => LocalDBManagerImpl());
+  locator.registerLazySingleton<LocalDBManager>(() => LocalDBManagerImpl());
 
-  getIt.registerLazySingleton<CacheManager>(
+  locator.registerLazySingleton<CacheManager>(
       () => CacheManagerImpl(initSharedPref: sharedPrefs));
 }

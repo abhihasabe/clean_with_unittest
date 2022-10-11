@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DialogHelper {
   /*static Future<void> launchURL(String url) async{
@@ -41,6 +42,18 @@ class DialogHelper {
         return alert;
       },
     );
+  }
+
+  static showToast(BuildContext context, String msg) {
+    return Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        fontSize: 16,
+        backgroundColor: Colors.black12,
+        webShowClose: true,
+        textColor: Colors.black);
   }
 
   static void dismissDialog(BuildContext context) {

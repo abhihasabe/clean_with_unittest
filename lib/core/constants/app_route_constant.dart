@@ -7,4 +7,5 @@ class AppRouteConstants {
   static const String homeScreen = "/home";
   static const String langScreen = '/lang';
   static const String themeScreen = '/theme';
+  static const String forgotPasswordScreen = '/forgotPassword';
 }

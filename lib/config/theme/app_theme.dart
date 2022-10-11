@@ -46,10 +46,20 @@ class AppThemes {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-              foregroundColor:
-                  MaterialStateColor.resolveWith((states) => disabledColor),
-              backgroundColor:
-                  MaterialStateColor.resolveWith((states) => buttonColor))),
+        side: MaterialStateProperty.resolveWith<BorderSide>(
+            (states) => const BorderSide(color: enableBorderDarkColor)),
+        foregroundColor:
+            MaterialStateColor.resolveWith((states) => disabledDarkColor),
+        backgroundColor:
+            MaterialStateColor.resolveWith((states) => buttonDarkColor),
+        shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
+          return RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10));
+        }),
+        textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) =>
+            const TextStyle(
+                color: buttonDarkTextColor, fontWeight: FontWeight.bold, fontSize: 18)),
+      )),
       buttonTheme: ThemeData.dark().buttonTheme.copyWith(
           buttonColor: buttonDarkColor,
           disabledColor: disabledColor,
@@ -94,6 +104,22 @@ class AppThemes {
       indicatorColor: indicatorColor,
       disabledColor: disabledTextColor,
       cardColor: cardColor,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+        side: MaterialStateProperty.resolveWith<BorderSide>(
+            (states) => const BorderSide(color: enableBorderColor)),
+        foregroundColor:
+            MaterialStateColor.resolveWith((states) => disabledColor),
+        backgroundColor:
+            MaterialStateColor.resolveWith((states) => buttonColor),
+        shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
+          return RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10));
+        }),
+        textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) =>
+            const TextStyle(
+                color: buttonTextColor, fontWeight: FontWeight.bold, fontSize: 18)),
+      )),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: bottomNavigationBarBackgroundColor,
         selectedItemColor: bottomNavigationBarSelectedIconColor,

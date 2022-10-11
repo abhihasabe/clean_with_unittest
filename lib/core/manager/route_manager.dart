@@ -1,8 +1,8 @@
+import 'package:clean_unittest/feature/splash/presentation/screens/splash_screen.dart';
+import 'package:clean_unittest/feature/auth/presentation/screens/login_screen.dart';
+import 'package:clean_unittest/feature/auth/presentation/screens/reg_screen.dart';
+import'package:clean_unittest/feature/home/presentation/screens/home_screen.dart';
 import 'package:clean_unittest/core/constants/app_route_constant.dart';
-import 'package:clean_unittest/feature/presentation/screens/home_screen.dart';
-import 'package:clean_unittest/feature/presentation/screens/login_screen.dart';
-import 'package:clean_unittest/feature/presentation/screens/reg_screen.dart';
-import 'package:clean_unittest/feature/presentation/screens/splash_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class Routes {
@@ -18,6 +18,9 @@ class Routes {
     },
     AppRouteConstants.homeScreen: (uri, params) {
       return VxRoutePage(pageName: "/home", child: const Home());
+    },
+    AppRouteConstants.forgotPasswordScreen: (uri, params) {
+      return VxRoutePage(pageName: "/forgotPassword", child: const Home());
     },
   });
 }
