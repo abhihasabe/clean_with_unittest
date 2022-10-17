@@ -1,7 +1,5 @@
-import 'package:clean_unittest/feature/auth/presentation/bloc_cubits/auth_cubit.dart';
-import 'package:clean_unittest/feature/language/presentation/bloc_cubits/lang_cubit.dart';
 import 'package:clean_unittest/feature/splash/presentation/bloc_cubits/splash_cubit.dart';
-import 'package:clean_unittest/feature/theme/presentation/bloc_cubits/theme_cubit.dart';
+import 'package:clean_unittest/feature/auth/presentation/bloc_cubits/auth_cubit.dart';
 import 'package:clean_unittest/feature/app/presentation/bloc_cubits/app_state.dart';
 import 'package:clean_unittest/feature/app/presentation/bloc_cubits/app_cubit.dart';
 import 'package:clean_unittest/core/localization/app_localization.dart';
@@ -10,7 +8,6 @@ import 'package:clean_unittest/core/manager/route_manager.dart';
 import 'package:clean_unittest/core/local_db/hive_box.dart';
 import 'package:clean_unittest/config/theme/app_theme.dart';
 import 'package:clean_unittest/di/injection.dart' as di;
-import 'package:clean_unittest/di/injection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => locator<AppCubit>()),
-        BlocProvider(create: (context) => locator<ThemeCubit>()),
-        BlocProvider(create: (context) => locator<LangCubit>()),
+        BlocProvider(create: (context) => di.locator<AppCubit>()),
         BlocProvider(create: (context) => di.locator<SplashCubit>()),
         BlocProvider(create: (context) => di.locator<AuthCubit>())
       ],
@@ -55,9 +50,9 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [
-            Locale('en', ''), // English, no country code
-            Locale('hi', ''), // English, no country code
-            Locale('es', ''), // Spanish, no country code
+            Locale('en', ''),
+            Locale('es', ''),
+            Locale('hi', ''),
           ],
           localeResolutionCallback: (locale, supportedLocales) {
             for (var supportedLocale in supportedLocales) {

@@ -3,6 +3,7 @@ import 'package:clean_unittest/feature/splash/presentation/bloc_cubits/splash_st
 import 'package:clean_unittest/feature/splash/presentation/widgets/logo_widget.dart';
 import 'package:clean_unittest/core/constants/app_cache_constant.dart';
 import 'package:clean_unittest/core/constants/app_route_constant.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     Future.delayed(const Duration(milliseconds: 3000), () {
       context.read<SplashCubit>().checkAccount(CacheConstants.users);
     });

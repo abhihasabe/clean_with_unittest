@@ -4,5 +4,6 @@ class LangList {
   static final all = [
     const Locale('en',''),
     const Locale('es',''),
+    const Locale('hi',''),
   ];
 }

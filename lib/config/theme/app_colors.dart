@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color primarySwatch = Colors.red;
 const Color primaryDarkSwatch = Colors.red;
 
-const Color primaryColor = Color(0xb23055a6);
+const Color primaryColor = Colors.black; //Color(0xb28c1066);
 const Color primaryDarkColor = Colors.black;
 
 const Color onPrimaryColor = Colors.white;
@@ -63,7 +63,7 @@ const Color tabUnSelectedIndicatorDarkColor = Colors.black;
 const Color backgroundColor = Colors.white;
 const Color backgroundDarkColor = Color(0xFF393838);
 
-const Color scaffoldBackgroundColor = Color(0xb23055a6);
+const Color scaffoldBackgroundColor = Color(0xb28c1066); //Color(0xb23055a6);
 const Color scaffoldBackgroundDarkColor = Colors.black;
 
 const Color cardColor = Colors.white;
@@ -75,11 +75,11 @@ const Color purple = Color(0xb23055a6);
 const Color textColor = Colors.black;
 const Color textDarkColor = Colors.white;
 
-const Color buttonColor = primaryColor;
-const Color buttonDarkColor = primaryColor;
+const Color buttonBGColor = primaryColor;
+const Color buttonBGDarkColor = primaryDarkColor;
 
-const Color buttonTextColor = textDarkColor;
-const Color buttonDarkTextColor = textColor;
+const Color buttonTextColor = textColor;
+const Color buttonDarkTextColor = textDarkColor;
 
 const Color disabledColor = Color(0xFFcccccc);
 const Color disabledDarkColor = Color(0xFF393838);

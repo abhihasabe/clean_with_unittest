@@ -3,19 +3,14 @@ import 'package:clean_unittest/core/usecase/usecase.dart';
 import 'package:clean_unittest/core/error/failure.dart';
 import 'package:either_dart/src/either.dart';
 
-class AppUseCase implements UseCaseTwoInput<String, String, dynamic> {
-  final AppRepository themeRepository;
+class AddThemeUseCase implements UseCaseTwoInput<String, String, dynamic> {
+  final AppRepository appRepository;
 
-  AppUseCase({required this.themeRepository});
+  AddThemeUseCase({required this.appRepository});
 
   @override
   Future<Either<Failure, dynamic>> invoke(key, value) async {
-    final dynamic apiResult;
-    if (value.isNotEmpty) {
-      apiResult = await themeRepository.getThemeData(key);
-    } else {
-      apiResult = await themeRepository.addThemeData(key, value);
-    }
+    final dynamic apiResult = await appRepository.addThemeData(key, value);
     return Right(apiResult);
   }
 }

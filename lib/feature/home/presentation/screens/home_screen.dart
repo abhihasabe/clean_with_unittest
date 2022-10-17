@@ -1,6 +1,6 @@
-import 'package:clean_unittest/feature/theme/presentation/bloc_cubits/theme_cubit.dart';
+import 'package:clean_unittest/core/localization/app_localization.dart';
+import 'package:clean_unittest/widgets/nav_drawer_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,14 +14,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
+      drawer: const NavDrawer(),
       appBar: AppBar(
-        leading: Icon(
-          Icons.line_weight_sharp,
-          size: 30,
-          color: Theme.of(context).appBarTheme.iconTheme?.color,
-        ),
         title: Text(
-          "Home",
+          "${AppLocalization.of(context)!.translate('home')}",
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
@@ -37,45 +33,9 @@ class _HomeState extends State<Home> {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 1,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: FlatButton(
-              color: Theme.of(context).buttonTheme.colorScheme?.background,
-              textColor: Theme.of(context).buttonTheme.colorScheme?.primary,
-              onPressed: () {
-                //context.read<AppCubit>().changeTheme(ThemeMode.light);
-              },
-              child: const Text(
-                'LIGHT',
-                style: TextStyle(fontSize: 20.0),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: FlatButton(
-              color: Theme.of(context).buttonTheme.colorScheme?.background,
-              textColor: Theme.of(context).buttonTheme.colorScheme?.primary,
-              onPressed: () {
-                //context.read<AppCubit>().changeTheme(ThemeMode.dark);
-              },
-              child: const Text(
-                'DARK',
-                style: TextStyle(fontSize: 20.0),
-              ),
-            ),
-          ),
-        ],
-      ),
+      body: Center(
+          child: Text("${AppLocalization.of(context)!.translate('home')}",
+              style: Theme.of(context).textTheme.titleLarge)),
     );
   }
 }

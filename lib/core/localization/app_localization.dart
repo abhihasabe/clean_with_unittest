@@ -35,7 +35,7 @@ class AppLocalization {
 
   bool get isEnLocale => locale.languageCode == 'en';
 
-  bool get isEsLocale => locale.languageCode == 'es';
+  bool get isSpLocale => locale.languageCode == 'es';
 
   bool get isHiLocale => locale.languageCode == 'hi';
 }
