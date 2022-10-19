@@ -3,6 +3,7 @@ import 'package:clean_unittest/feature/auth/presentation/bloc_cubits/auth_state.
 import 'package:clean_unittest/core/localization/app_localization.dart';
 import 'package:clean_unittest/core/constants/app_route_constant.dart';
 import 'package:clean_unittest/core/helper/dialog.helper.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -29,6 +30,13 @@ class _RegistrationState extends State<Registration> {
       emailController.text.isNotEmpty &&
       phoneController.text.isNotEmpty &&
       passwordController.text.isNotEmpty;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +68,9 @@ class _RegistrationState extends State<Registration> {
                 Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
-                      'Sign Out',
-                      style: TextStyle(fontSize: 20),
+                    child: Text(
+                      '${AppLocalization.of(context)!.translate('signup')}',
+                      style: const TextStyle(fontSize: 20),
                     )),
                 TextFormField(
                   controller: fNameController,
@@ -167,13 +175,13 @@ class _RegistrationState extends State<Registration> {
                                 context.read<AuthCubit>().userReg();
                               }
                             : null,
-                        child: const Text('SIGN UP'))),
+                        child: Text('${AppLocalization.of(context)!.translate('signup')}'))),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text('Does have account?'),
+                    Text('${AppLocalization.of(context)!.translate('dhaccount')}'),
                     TextButton(
-                      child: Text('SIGN IN',
+                      child: Text('${AppLocalization.of(context)!.translate('signin')}',
                           style: Theme.of(context).textTheme.bodyText1),
                       onPressed: () {
                         VxNavigator.of(context).clearAndPush(

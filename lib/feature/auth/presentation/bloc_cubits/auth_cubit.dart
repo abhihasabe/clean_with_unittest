@@ -61,7 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> userLogin() async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final data = await loginUseCase
+    await loginUseCase
         .invoke(LoginParams(
             email: state.email.value, password: state.password.value))
         .then((resp) => _eitherLoadedOrErrorState(resp));

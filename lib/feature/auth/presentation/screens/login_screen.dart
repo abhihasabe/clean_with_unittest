@@ -4,7 +4,6 @@ import 'package:clean_unittest/core/localization/app_localization.dart';
 import 'package:clean_unittest/core/constants/app_route_constant.dart';
 import 'package:clean_unittest/core/helper/dialog.helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,21 +20,30 @@ class _LoginState extends State<Login> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  /// Focus Node
+  final _fnEmail = FocusNode();
+  final _fnPassword = FocusNode();
+
   bool get isPopulated =>
       userNameController.text.isNotEmpty && passwordController.text.isNotEmpty;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
@@ -64,9 +72,11 @@ class _LoginState extends State<Login> {
                 Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(10),
-                    child: Text('Sign in',
+                    child: Text(
+                        '${AppLocalization.of(context)!.translate('signin')}',
                         style: Theme.of(context).textTheme.headline5)),
                 TextFormField(
+                    focusNode: _fnEmail,
                     controller: userNameController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
@@ -75,7 +85,8 @@ class _LoginState extends State<Login> {
                             ? AppLocalization.of(context)!.translate('peeid')
                             : null,
                         border: const OutlineInputBorder(),
-                        labelText: 'Email'),
+                        labelText:
+                            '${AppLocalization.of(context)!.translate('email')}'),
                     validator: (value) {
                       AppLocalization.of(context)!.translate('peeid');
                     },
@@ -84,11 +95,13 @@ class _LoginState extends State<Login> {
                     }),
                 const SizedBox(height: 10),
                 TextFormField(
+                    focusNode: _fnPassword,
                     controller: passwordController,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
-                      labelText: 'Password',
+                      labelText:
+                          '${AppLocalization.of(context)!.translate('password')}',
                       errorText: state.password.invalid
                           ? AppLocalization.of(context)!.translate('pepass')
                           : null,
@@ -106,7 +119,8 @@ class _LoginState extends State<Login> {
                     VxNavigator.of(context).push(
                         Uri.parse(AppRouteConstants.forgotPasswordScreen));
                   },
-                  child: Text('Forgot Password',
+                  child: Text(
+                      '${AppLocalization.of(context)!.translate('fpassword')}',
                       style: Theme.of(context).textTheme.bodyText1),
                 ),
                 Container(
@@ -119,14 +133,17 @@ class _LoginState extends State<Login> {
                               context.read<AuthCubit>().userLogin();
                             }
                           : null,
-                      child: const Text('LOGIN'),
+                      child: Text(
+                          '${AppLocalization.of(context)!.translate('signin')}', ),
                     )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text('Does not have account?'),
+                    Text(
+                        '${AppLocalization.of(context)!.translate('dhaccount')}'),
                     TextButton(
-                      child: Text('SIGN UP',
+                      child: Text(
+                          '${AppLocalization.of(context)!.translate('signup')}',
                           style: Theme.of(context).textTheme.bodyText1),
                       onPressed: () {
                         VxNavigator.of(context)

@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 import 'app_colors.dart';
 
 class AppThemes {
-  static Brightness? get currentSystemBrightness =>
-      SchedulerBinding.instance.window.platformBrightness;
+  static Brightness? get currentSystemBrightness => SchedulerBinding.instance.window.platformBrightness;
 
   static ThemeData themeData(bool isDarkTheme) {
     return isDarkTheme ? darkTheme : lightTheme;
@@ -26,13 +25,20 @@ class AppThemes {
       focusColor: focusColor,
       disabledColor: disabledTextDarkColor,
       cardColor: cardDarkColor,
+      selectedRowColor: selectedRowDarkColor,
       errorColor: errorColor,
+      cardTheme: const CardTheme(
+        color: cardDarkColor,
+        shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(7))),
+        elevation: 1.0,
+      ),
       textTheme: _customTextTheme(
           ThemeData.dark().textTheme, textDarkColor, "darkTheme"),
       primaryTextTheme: _customTextTheme(
           ThemeData.dark().primaryTextTheme, textDarkColor, "darkTheme"),
       indicatorColor: indicatorDarkColor,
-      iconTheme: const IconThemeData(color: errorColor, opacity: 0.8),
+      iconTheme: const IconThemeData(color: iconDarkColor, opacity: 0.8),
       colorScheme: const ColorScheme.dark(),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: bottomNavigationBarBackgroundDarkColor,
@@ -46,26 +52,25 @@ class AppThemes {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-        side: MaterialStateProperty.resolveWith<BorderSide>(
-            (states) => const BorderSide(color: enableBorderDarkColor)),
+        side: MaterialStateProperty.all<BorderSide>(
+            const BorderSide(color: enableBorderDarkColor)),
         foregroundColor:
-            MaterialStateColor.resolveWith((states) => disabledDarkColor),
+            MaterialStateColor.resolveWith((states) => buttonDarkTextColor),
         backgroundColor:
-            MaterialStateColor.resolveWith((states) => buttonDarkColor),
-        shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
-          return RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10));
-        }),
-        textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) =>
-            const TextStyle(
-                color: buttonDarkTextColor, fontWeight: FontWeight.bold, fontSize: 18)),
+            MaterialStateColor.resolveWith((states) => buttonBGDarkColor),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(
+            color: buttonDarkTextColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 14)),
       )),
       buttonTheme: ThemeData.dark().buttonTheme.copyWith(
-          buttonColor: buttonDarkColor,
+          buttonColor: buttonBGDarkColor,
           disabledColor: disabledColor,
           colorScheme: ThemeData.dark()
               .colorScheme
-              .copyWith(secondary: buttonDarkColor)),
+              .copyWith(secondary: buttonBGDarkColor)),
       inputDecorationTheme: const InputDecorationTheme(
         hintStyle: TextStyle(color: hintDarkColor),
         labelStyle: TextStyle(color: labelDarkColor),
@@ -88,7 +93,8 @@ class AppThemes {
       tabBarTheme: const TabBarTheme(
           labelColor: tabSelectedDarkColor,
           unselectedLabelColor: tabUnSelectedDarkColor,
-          indicator: BoxDecoration(color: tabUnSelectedIndicatorDarkColor)));
+          indicator: BoxDecoration(color: tabUnSelectedIndicatorDarkColor)),
+      drawerTheme: const DrawerThemeData());
   static ThemeData lightTheme = ThemeData(
       backgroundColor: backgroundColor,
       brightness: Brightness.light,
@@ -104,22 +110,22 @@ class AppThemes {
       indicatorColor: indicatorColor,
       disabledColor: disabledTextColor,
       cardColor: cardColor,
+      selectedRowColor: selectedRowColor,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-        side: MaterialStateProperty.resolveWith<BorderSide>(
-            (states) => const BorderSide(color: enableBorderColor)),
-        foregroundColor:
-            MaterialStateColor.resolveWith((states) => disabledColor),
-        backgroundColor:
-            MaterialStateColor.resolveWith((states) => buttonColor),
-        shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
-          return RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10));
-        }),
-        textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) =>
-            const TextStyle(
-                color: buttonTextColor, fontWeight: FontWeight.bold, fontSize: 18)),
-      )),
+              side: MaterialStateProperty.all<BorderSide>(
+                  const BorderSide(color: enableBorderColor)),
+              foregroundColor:
+                  MaterialStateColor.resolveWith((states) => buttonTextColor),
+              backgroundColor:
+                  MaterialStateColor.resolveWith((states) => buttonBGColor),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+              textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(
+                  color: buttonTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18)))),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: bottomNavigationBarBackgroundColor,
         selectedItemColor: bottomNavigationBarSelectedIconColor,
@@ -130,10 +136,16 @@ class AppThemes {
             IconThemeData(color: bottomNavigationBarUnSelectedIconColor),
         showUnselectedLabels: true,
       ),
+      cardTheme: const CardTheme(
+        color: cardColor,
+        shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(7))),
+        elevation: 1.0,
+      ),
       buttonTheme: ThemeData.light().buttonTheme.copyWith(
-          buttonColor: buttonColor,
+          buttonColor: buttonBGColor,
           colorScheme:
-              ThemeData.light().colorScheme.copyWith(secondary: buttonColor)),
+              ThemeData.light().colorScheme.copyWith(secondary: buttonBGColor)),
       inputDecorationTheme: const InputDecorationTheme(
         hintStyle: TextStyle(color: hintColor),
         labelStyle: TextStyle(color: labelColor),
@@ -144,8 +156,7 @@ class AppThemes {
           .copyWith(color: const Color(0xFF442B2D)),
       textTheme: _customTextTheme(
           ThemeData.light().textTheme, textColor, "lightTheme"),
-      primaryTextTheme: _customTextTheme(
-          ThemeData.light().primaryTextTheme, textColor, "lightTheme"),
+      primaryTextTheme: _customTextTheme(ThemeData.light().primaryTextTheme, textColor, "lightTheme"),
       colorScheme: const ColorScheme.light(),
       appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -159,10 +170,7 @@ class AppThemes {
         toolbarTextStyle: TextStyle(
             fontSize: 16, color: appBarTextColor, fontWeight: FontWeight.bold),
       ),
-      tabBarTheme: const TabBarTheme(
-          labelColor: tabSelectedDarkColor,
-          unselectedLabelColor: tabBarUnSelectedColor,
-          indicator: BoxDecoration(color: tabBarUnSelectedIndicatorColor)));
+      tabBarTheme: const TabBarTheme(labelColor: tabSelectedDarkColor, unselectedLabelColor: tabBarUnSelectedColor, indicator: BoxDecoration(color: tabBarUnSelectedIndicatorColor)));
 
   static TextTheme _customTextTheme(TextTheme base, Color color, String theme) {
     return base

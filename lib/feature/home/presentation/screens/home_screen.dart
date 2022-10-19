@@ -1,5 +1,5 @@
 import 'package:clean_unittest/core/localization/app_localization.dart';
-import 'package:clean_unittest/widgets/nav_drawer_widget.dart';
+import 'package:clean_unittest/core/widgets/nav_drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

@@ -25,10 +25,8 @@ class _ThemeCardState extends State<ThemeCard> {
       height: DIMENSION_90,
       child: Card(
         color: widget.themeMode!.isSelected
-            ? (brightness == Brightness.dark)
-                ? cardDarkColor
-                : const Color(0xffece2e4)
-            : cardColor,
+            ? Theme.of(context).selectedRowColor
+            : Theme.of(context).cardTheme.color,
         elevation: DIMENSION_2,
         margin: const EdgeInsets.all(8.0),
         child: Padding(
@@ -44,28 +42,28 @@ class _ThemeCardState extends State<ThemeCard> {
                       child: Text(widget.themeMode!.buttonText,
                           style: TextStyle(
                               color: widget.themeMode!.isSelected
-                                  ? Colors.white
-                                  : Colors.black,
+                                  ? Theme.of(context).listTileTheme.textColor
+                                  : Theme.of(context).listTileTheme.textColor,
                               fontSize: 18.0)),
                     ),
                     decoration: BoxDecoration(
                       color: widget.themeMode!.isSelected
-                          ? primaryColor
-                          : Colors.transparent,
+                          ? Theme.of(context).listTileTheme.textColor
+                          : Theme.of(context).listTileTheme.textColor,
                       border: Border.all(
                           width: 1.0,
                           color: widget.themeMode!.isSelected
                               ? primaryColor
                               : Colors.grey),
                       borderRadius:
-                          const BorderRadius.all(Radius.circular(2.0)),
+                          const BorderRadius.all(Radius.circular(4.0)),
                     ),
                   ),
                   title: Text(widget.themeMode!.title,
                       style: TextStyle(
                           color: widget.themeMode!.isSelected
-                              ? textColor
-                              : Colors.black,
+                              ? Theme.of(context).listTileTheme.textColor
+                              : Theme.of(context).listTileTheme.textColor,
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold)),
                   onTap: () {

@@ -60,11 +60,11 @@ class DialogHelper {
     Navigator?.of(context, rootNavigator: true).pop();
   }
 
-  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+  /*static ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
       showSnackBars(String text, Color bgColor, BuildContext context) {
     final snackBar = SnackBar(content: Text(text), backgroundColor: bgColor);
     return Scaffold.of(context).showSnackBar(snackBar);
-  }
+  }*/
 
   static void dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());

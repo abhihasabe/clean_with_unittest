@@ -34,7 +34,7 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             title: Text("${AppLocalization.of(context)!.translate('home')}",
                 style: Theme.of(context).textTheme.titleSmall),
-            leading: const Icon(Icons.home),
+            leading: Icon(Icons.home, color: Theme.of(context).iconTheme.color),
             onTap: () {
               Navigator.of(context).pop(false);
             },
@@ -42,7 +42,8 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             title: Text("${AppLocalization.of(context)!.translate('lang')}",
                 style: Theme.of(context).textTheme.titleSmall),
-            leading: const Icon(Icons.language),
+            leading:
+                Icon(Icons.language, color: Theme.of(context).iconTheme.color),
             onTap: () {
               Navigator.of(context).pop(false);
               VxNavigator.of(context)
@@ -52,8 +53,8 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             title: Text("${AppLocalization.of(context)!.translate('theme')}",
                 style: Theme.of(context).textTheme.titleSmall),
-            leading:
-                const Icon(Icons.color_lens_outlined),
+            leading: Icon(Icons.color_lens_outlined,
+                color: Theme.of(context).iconTheme.color),
             onTap: () {
               Navigator.of(context).pop(false);
               VxNavigator.of(context)
@@ -63,7 +64,8 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             title: Text("${AppLocalization.of(context)!.translate('logout')}",
                 style: Theme.of(context).textTheme.titleSmall),
-            leading: const Icon(Icons.logout),
+            leading:
+                Icon(Icons.logout, color: Theme.of(context).iconTheme.color),
             onTap: () {
               context.read<AuthCubit>().logout();
               Navigator.of(context).pop(false);

@@ -45,6 +45,9 @@ const Color bottomNavigationBarBackgroundDarkColor = Colors.black;
 const Color bottomNavigationBarTextColor = Colors.black;
 const Color bottomNavigationBarTextDarkColor = Colors.white;
 
+const Color selectedRowColor = Color(0xffece2e4);
+const Color selectedRowDarkColor = Color(0xffece2e4);
+
 const Color bottomNavigationBarSelectedIconColor = Colors.red;
 const Color bottomNavigationBarSelectedIconDarkColor = Colors.red;
 
@@ -119,9 +122,9 @@ const Color hoverColorDarkColor = Color(0xff3A3A3B);
 const Color focusColor = Color(0xffA8DAB5);
 const Color focusColorDarkColor = Color(0xff0B2512);
 
-const Color iconColor = Colors.white;
+const Color iconColor = Colors.black;
 
-const Color iconDarkColor = Colors.black;
+const Color iconDarkColor = Colors.white;
 const Color titleTextColor = Colors.white;
 
 const Color titleTextDarkColor = Colors.white;
